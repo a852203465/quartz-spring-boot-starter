@@ -68,10 +68,6 @@ public class QuartzJobModule implements Serializable {
         return Validator.isNull(startTime) ? DateUtil.date() : startTime;
     }
 
-    public Date getEndTime() {
-        return Validator.isNull(endTime) ? DateUtil.offsetMonth(new Date(),1) : endTime;
-    }
-
     public String getJobName() {
         return StrUtil.isEmpty(jobName) ? QuartzUtils.DEFAULT_JOB : jobName;
     }
