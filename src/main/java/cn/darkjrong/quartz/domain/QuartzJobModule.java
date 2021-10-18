@@ -86,7 +86,6 @@ public class QuartzJobModule implements Serializable {
                 && StrUtil.isNotBlank(getGroupName())
                 && StrUtil.isNotBlank(cron)
                 && ObjectUtil.isNotEmpty(getStartTime())
-                && ObjectUtil.isNotEmpty(getEndTime())
                 && (ClassUtils.hasMethod(Job.class, "execute", JobExecutionContext.class)
                 || ClassUtils.hasMethod(Job.class, "executeInternal", JobExecutionContext.class))
         );
