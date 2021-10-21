@@ -1,6 +1,7 @@
 package cn.darkjrong.quartz.utils;
 
 import cn.darkjrong.quartz.domain.QuartzJobModule;
+import cn.darkjrong.quartz.exceptions.SchedulerRuntimeException;
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.lang.Assert;
 import lombok.AllArgsConstructor;
@@ -38,6 +39,112 @@ public class QuartzUtils {
         if (!scheduler.isShutdown()) {
             scheduler.start();
         }
+    }
+
+    /**
+     * 启动延迟
+     *
+     * @param seconds 秒
+     * @throws SchedulerRuntimeException 调度器运行时异常
+     */
+    public void startDelayed(int seconds) throws SchedulerRuntimeException {
+        try {
+            if (!scheduler.isShutdown()) {
+                scheduler.startDelayed(seconds);
+            }
+        }catch (Exception e) {
+            log.error("startDelayed {}", e.getMessage());
+            throw new SchedulerRuntimeException(e);
+        }
+    }
+
+    /**
+     * 检查是否存在
+     *
+     * @param jobName 作业名
+     * @return {@link Boolean}
+     */
+    public Boolean checkExists(String jobName) {
+        return this.checkExists(DEFAULT_JOB, jobName);
+    }
+
+    /**
+     * 检查是否存在
+     * @param groupName 分组名
+     * @param jobName 作业名
+     * @return {@link Boolean}
+     */
+    public Boolean checkExists(String groupName, String jobName) {
+        JobKey jobKey = JobKey.jobKey(jobName, groupName);
+        try {
+            return scheduler.checkExists(jobKey);
+        }catch (Exception e) {
+            log.error("Check task {} is abnormal. Exception information {} is abnormal", jobName, e.getMessage());
+        }
+        return Boolean.FALSE;
+    }
+
+    /**
+     * 是否是启动的
+     *
+     * @return {@link Boolean}
+     */
+    public Boolean isStarted() {
+        try {
+            return scheduler.isStarted();
+        }catch (SchedulerException e) {
+            log.error("isStarted {}", e.getMessage());
+        }
+
+        return Boolean.FALSE;
+    }
+
+    /**
+     * 中断任务
+     *
+     * @param groupName 组名称
+     * @param jobName   作业名
+     * @return {@link Boolean}
+     */
+    public Boolean interrupt(String groupName, String jobName) {
+        JobKey jobKey = JobKey.jobKey(jobName, groupName);
+        try {
+            return scheduler.interrupt(jobKey);
+        }catch (Exception e) {
+            log.error("Interrupted task {} Is abnormal. The cause is {}", jobName, e.getMessage());
+        }
+        return Boolean.FALSE;
+    }
+
+    /**
+     * 清除所有任务
+     *
+     * @return {@link Boolean}
+     */
+    public Boolean clear() {
+        try {
+            scheduler.clear();
+            return Boolean.TRUE;
+        } catch (SchedulerException e) {
+            log.error("clear {}", e.getMessage());
+        }
+        return Boolean.FALSE;
+    }
+
+    /**
+     * 暂时停止Scheduler's触发{@link Trigger}s
+     *
+     * @return {@link Boolean}
+     */
+    public Boolean standby(){
+        try {
+            scheduler.standby();
+            return Boolean.TRUE;
+        }catch (SchedulerException e) {
+            log.error("standby {}", e.getMessage());
+        }
+
+        return Boolean.FALSE;
     }
 
     /**
@@ -308,6 +415,46 @@ public class QuartzUtils {
             log.error("Description Stopping all scheduled tasks is abnormal {}", e.getMessage());
         }
         return Boolean.FALSE;
+    }
+
+    /**
+     * 是否是停止
+     *
+     * @return {@link Boolean}
+     * @throws SchedulerException 调度程序异常
+     */
+    public Boolean isShutdown() throws SchedulerException {
+        return scheduler.isShutdown();
+    }
+
+    /**
+     * 获取目前执行的任务
+     *
+     * @return {@link List}<{@link JobExecutionContext}>
+     * @throws SchedulerRuntimeException 调度器运行时异常
+     */
+    public List<JobExecutionContext> getCurrentlyExecutingJobs() throws SchedulerRuntimeException {
+        try {
+            return scheduler.getCurrentlyExecutingJobs();
+        } catch (SchedulerException e) {
+            log.error("getCurrentlyExecutingJobs {}", e.getMessage());
+            throw new SchedulerRuntimeException(e);
+        }
+    }
+
+    /**
+     * 获取侦听器管理器
+     *
+     * @return {@link ListenerManager}
+     * @throws SchedulerRuntimeException 调度器运行时异常
+     */
+    public ListenerManager getListenerManager() throws SchedulerRuntimeException {
+        try {
+           return scheduler.getListenerManager();
+        } catch (SchedulerException e) {
+            log.error("getListenerManager {}", e.getMessage());
+            throw new SchedulerRuntimeException(e);
+        }
     }
 
     /**
