@@ -1,6 +1,6 @@
 package cn.darkjrong.spring.boot.autoconfigure;
 
-import cn.darkjrong.quartz.annotations.QuartzScheduled;
+import cn.darkjrong.quartz.annotation.QuartzScheduled;
 import cn.darkjrong.quartz.job.ClusterQuartzFixedDelayJobBean;
 import cn.darkjrong.quartz.job.ClusterQuartzJobBean;
 import cn.darkjrong.quartz.job.FixedDelayJobData;

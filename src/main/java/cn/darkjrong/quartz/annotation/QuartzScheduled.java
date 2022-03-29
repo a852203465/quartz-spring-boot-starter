@@ -1,4 +1,4 @@
-package cn.darkjrong.quartz.annotations;
+package cn.darkjrong.quartz.annotation;
 
 import java.lang.annotation.*;
 

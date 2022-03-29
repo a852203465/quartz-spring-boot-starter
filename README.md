@@ -58,7 +58,7 @@ public class CustomDemoJob {
 public class QuartzTest {
 
     @Autowired
-    private QuartzJobUtils quartzJobUtils;
+    private QuartzTemplate quartzTemplate;
 
     @Test
     void addJob() throws InterruptedException {
@@ -67,9 +67,7 @@ public class QuartzTest {
         quartzJobModule.setCron("* * * * * ?");
         quartzJobModule.setJobClass(TaskJobDetail.class);
 
-        quartzJobModule.verify();
-
-        quartzJobUtils.addJob(quartzJobModule);
+        quartzTemplate.addJob(quartzJobModule);
         Thread.sleep(1000 * 1000);
     }
 

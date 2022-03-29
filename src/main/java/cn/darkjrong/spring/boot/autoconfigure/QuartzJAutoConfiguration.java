@@ -1,6 +1,6 @@
 package cn.darkjrong.spring.boot.autoconfigure;
 
-import cn.darkjrong.quartz.utils.QuartzUtils;
+import cn.darkjrong.quartz.QuartzTemplate;
 import org.quartz.Scheduler;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -16,8 +16,8 @@ import org.springframework.context.annotation.Configuration;
 public class QuartzJAutoConfiguration {
 
     @Bean
-    public QuartzUtils quartzUtils(Scheduler scheduler) {
-        return new QuartzUtils(scheduler);
+    public QuartzTemplate quartzTemplate(Scheduler scheduler) {
+        return new QuartzTemplate(scheduler);
     }
 
     @Bean

@@ -1,6 +1,6 @@
 package cn.darkjrong.quartz.domain;
 
-import cn.darkjrong.quartz.utils.QuartzUtils;
+import cn.darkjrong.quartz.QuartzTemplate;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.lang.Validator;
 import cn.hutool.core.util.ObjectUtil;
@@ -69,11 +69,11 @@ public class QuartzJobModule implements Serializable {
     }
 
     public String getJobName() {
-        return StrUtil.isEmpty(jobName) ? QuartzUtils.DEFAULT_JOB : jobName;
+        return StrUtil.isEmpty(jobName) ? QuartzTemplate.DEFAULT_JOB : jobName;
     }
 
     public String getGroupName() {
-        return StrUtil.isEmpty(groupName) ? QuartzUtils.DEFAULT_GROUP : groupName;
+        return StrUtil.isEmpty(groupName) ? QuartzTemplate.DEFAULT_GROUP : groupName;
     }
 
     /**

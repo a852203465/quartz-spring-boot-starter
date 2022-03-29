@@ -1,4 +1,4 @@
-package cn.darkjrong.quartz.utils;
+package cn.darkjrong.quartz;
 
 import cn.darkjrong.quartz.domain.QuartzJobModule;
 import cn.darkjrong.quartz.exceptions.SchedulerRuntimeException;
@@ -22,12 +22,12 @@ import java.util.List;
  * @date 2021/10/05
  */
 @AllArgsConstructor
-public class QuartzUtils {
+public class QuartzTemplate {
 
     public static final String DEFAULT_JOB = "defaultJob";
     public static final String DEFAULT_GROUP = "defaultGroup";
 
-    private static final Logger log = LoggerFactory.getLogger(QuartzUtils.class);
+    private static final Logger log = LoggerFactory.getLogger(QuartzTemplate.class);
     private final Scheduler scheduler;
 
     /**
